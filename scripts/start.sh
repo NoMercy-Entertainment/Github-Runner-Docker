@@ -5,7 +5,7 @@ echo "Configuring runner..."
 RUNNER_SUFFIX=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
 RUNNER_NAME="runner-$RUNNER_SUFFIX"
 
-cd /home/docker/actions-runner
+cd /root/actions-runner
 
 reg_url=https://api.github.com/orgs/$GITHUB_ORG/actions/runners/registration-token
 
@@ -43,5 +43,8 @@ remove () {
 }
 
 trap remove EXIT
+
+trap 'remove; exit 130' INT
+trap 'remove; exit 143' TERM
 
 ./bin/runsvc.sh
