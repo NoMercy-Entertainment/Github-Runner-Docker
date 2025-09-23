@@ -37,9 +37,7 @@ export ENV RUNNER_ALLOW_RUNASROOT=1
 
   
 remove () {
-  local rem_url=https://api.github.com/orgs/$GITHUB_ORG/actions/runners/remove-token
-  local rem_token=$(curl -sS -X POST -H "Authorization: Bearer $GITHUB_TOKEN" $rem_url | jq -r .token)
-  ./config.sh remove --token $rem_token
+  ./config.sh remove --token $REG_TOKEN
 }
 
 trap remove EXIT

@@ -1,8 +1,12 @@
 version: '3'
 
+volumes:
+  tmp: ~
+
 services:
   github-runner:
     container_name: github-runner
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,4 +14,5 @@ services:
       GH_TOKEN: ${GH_TOKEN}
       GITHUB_ORG: ${GITHUB_ORG}
     volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
+      - tmp:/tmp
+      - /var/run/docker.sock:/var/run/docker.sock
