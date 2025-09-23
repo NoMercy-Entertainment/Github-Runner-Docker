@@ -5,7 +5,7 @@ volumes:
 services:
   github-runner:
     deploy:
-      replicas: 3
+      replicas: 1
     restart: unless-stopped
     build:
       context: .
@@ -13,6 +13,8 @@ services:
     environment:
       GH_TOKEN: ${GH_TOKEN}
       GITHUB_ORG: ${GITHUB_ORG}
+      RUNNER_LABELS: ${RUNNER_LABELS}
+      RUNNER_GROUP: ${RUNNER_GROUP}
     volumes:
       - tmp:/tmp
       - /var/run/docker.sock:/var/run/docker.sock

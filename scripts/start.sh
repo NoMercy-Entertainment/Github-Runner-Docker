@@ -27,13 +27,23 @@ fi
 
 export ENV RUNNER_ALLOW_RUNASROOT=1
 
-./config.sh \
+
+# Build config.sh command with optional runner group
+CONFIG_CMD=(./config.sh \
   --replace \
   --unattended \
-  --token $REG_TOKEN \
-  --url https://github.com/$GITHUB_ORG \
-  --labels ${RUNNER_LABELS:-unlabeled} \
-  --name $RUNNER_NAME
+  --token "$REG_TOKEN" \
+  --url "https://github.com/$GITHUB_ORG" \
+  --labels "${RUNNER_LABELS:-unlabeled}" \
+  --name "$RUNNER_NAME")
+
+# Add runner group if set
+if [ -n "$RUNNER_GROUP" ]; then
+  CONFIG_CMD+=(--runnergroup "$RUNNER_GROUP")
+fi
+
+# Run the config command
+"${CONFIG_CMD[@]}"
 
   
 remove () {
