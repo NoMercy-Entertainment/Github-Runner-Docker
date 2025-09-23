@@ -1,11 +1,11 @@
-version: '3'
 
 volumes:
   tmp: ~
 
 services:
   github-runner:
-    container_name: github-runner
+    deploy:
+      replicas: 3
     restart: unless-stopped
     build:
       context: .
